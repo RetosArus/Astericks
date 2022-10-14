@@ -1,0 +1,62 @@
+// create usuario
+router.post("/users", (req, res) => {
+  const user = userSchema(req.body);
+  user
+    .save()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+     res.redirect('/')
+     
+
+});
+
+//login users
+router.post("/signIn", async (req, res) =>{
+    const {email, password} = req.body;
+    const user = await user.findOne({ email, password });
+
+    if(!user) return res.status(401).send({ message: "email not found" });
+    if(user.password !== password) return res.status(401("wrong password"));
+
+    jwt.sign({password: user.password}, 'secretKey');
+    return res.status(200).json({ token});
+
+})
+
+// get all usuario
+router.get("/users", (req, res) => {
+    userSchema
+    .find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// get a user
+router.get("/users/:id", (req, res) => {
+  const { id } = req.params;
+  userSchema
+    .findById(id)
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// delete a user
+router.delete("/users/:id", (req, res) => {
+  const { id } = req.params;
+  userSchema
+    .remove({ _id: id })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// update a user
+router.put("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, email,password } = req.body;
+  userSchema
+    .updateOne({ _id: id }, { $set: { name, email,password  } })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+module.exports = router;
