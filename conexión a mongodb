@@ -1,0 +1,21 @@
+// mongodb connection
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((error) => console.error(error));
+
+// server listening
+app.listen(port, (err, result) => {
+  console.log("Connected " + port)
+})
+
+
+.
+.
+.
+
+
+//conexion a mongo db
+mongoose.connect("mongodb+srv://valeria:123456789.@cluster1.6rzcvf8.mongodb.net/?retryWrites=true&w=majority")
+    .then (() => console.log('Conectado a la base de datos'))
+    .catch ((error) => console.error('no se pudo conectar a la bd,  ' + error))
